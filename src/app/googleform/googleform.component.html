@@ -1,0 +1,95 @@
+<div class="container">
+    <h1 class="text-center text-danger my-3">Reactive-forms in angular with validation</h1>
+    <form [formGroup]="checkoutForm" (ngSubmit)="postData()">
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">From Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="Email" formControlName="testformname">
+                <!-- <span
+                    *ngIf="f.testformname.touched && f.testformname.hasError('required')">Enter
+                    Your Email </span>
+                <span *ngIf="f.testformname.touched && f.testformname.hasError('email')">Enter
+                    valid Email </span>
+                <span
+                    *ngIf="f.testformname.touched && f.testformname.hasError('minlength')">Enter
+                    minimum 5 letters Email </span>
+                <span
+                    *ngIf="f.testformname.touched && f.testformname.hasError('maxlength')">Enter
+                    maximum 10 letters Email </span> -->
+            </div>
+        </div>
+        <div class="form-group mt-2 row">
+            <label for="Quantity" class="col-sm-2 col-form-label">From Description</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="Quantity" placeholder="Quantity"
+                    formControlName="formdescriptions">
+                <span
+                    *ngIf="f.formdescriptions.touched && f.quantity.hasError('required')">Enter
+                    Your Quantity </span>
+            </div>
+        </div> 
+        <div class="form-group row">
+            <label for="items" class="col-sm-2 col-form-label">Items</label>
+            <div class="col-sm-10" formArrayName="items">
+                <div *ngFor="let item of items['controls']; let i=index" [formGroupName]="i">
+                    <div class="d-flex justify-content-space-between align-item-center my-2">
+                        <button type="submit" class="btn btn-warning me-2" (click)="addNewItem()">Add</button>
+                        <a class="btn me-2 btn-danger" (click)="removeItem(i)">Remove</a>
+                        <select #select class="form-select" (change)="changeOptions(select.value,i)">
+                            <option selected>Open this select menu</option>
+                            <option *ngFor="let item of options" [value]="item">{{item}}</option>
+                        </select>
+                    </div>
+                    <input class="form-control" type="text" formControlName="question" id=task{{i}}>
+                    <input *ngIf="selectedOptionsValue === 'textInput'" class="form-control" type="text" formControlName="textanswer" id=task{{i}}>
+                    <div *ngIf="selectedOptionsValue === 'multiChoice'"  class="group-gap">
+                        <div class="mb-3" *ngFor="let item of gender">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" >
+                            <label class="form-check-label ms-1" for="flexRadioDefault1">
+                               {{item}}
+                            </label>
+                            </div>
+                    </div>
+                    <div *ngIf="selectedOptionsValue === 'dowpDown'"  class="group-gap" formArrayName="addinputElement">
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-sm btn-success my-2 btn-block" (click)="addInput()">Add more checkbox</button>
+                            <ul class="subjectList">
+                                <li *ngFor="let item of addinputElement.controls; let i = index">
+                                    <div class="form-check">
+                                        <input class="form-control" [formControlName]="i" type="text" >
+                                    </div>
+                                    <a class="btn my-1 btn-danger" (click)="removeinputItem(i)">Remove</a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedOptionsValue === 'checkbox'"  class="group-gap" formArrayName="addDynamicElement">
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-sm btn-success my-2 btn-block" (click)="addSuperPowers()">Add more checkbox</button>
+                            <ul class="subjectList">
+                                <li *ngFor="let item of addDynamicElement.controls; let i = index">
+                                    <div class="form-check">
+                                        <input class="form-check-input" [formControlName]="i" type="checkbox" [value]="item">
+                                        <label class="form-check-label" >
+                                            check it
+                                        </label>
+                                    </div>
+                                    <a class="btn me-2 btn-danger" (click)="removecheckItem(i)">Remove</a>
+                            </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary my-2" [disabled]="!checkoutForm.valid">Submit</button>
+                <!-- <button type="submit" class="btn btn-link" (click)="resetForm();">clear</button> -->
+            </div>
+            </div>
+        </div>
+    </form>
+</div>
